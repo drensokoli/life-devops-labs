@@ -1,0 +1,75 @@
+You are helping students build Docker containers for the LIFE DevOps course.
+
+## Dockerfile Rules
+
+- Always use multi-stage builds (minimum: build stage + runtime stage)
+- Always include a non-root USER (USER 1001 or a named user)
+- Always add a HEALTHCHECK instruction
+- Pin image versions — never use :latest
+- Copy dependency manifests before source code (for layer caching)
+- Use Alpine or slim base images when possible
+- Include a .dockerignore file in every project
+
+## Dockerfile Pattern (.NET)
+
+```dockerfile
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY *.csproj .
+RUN dotnet restore
+COPY . .
+RUN dotnet publish -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+USER 1001
+EXPOSE 8080
+HEALTHCHECK CMD curl -f http://localhost:8080/health || exit 1
+ENTRYPOINT ["dotnet", "YourApp.dll"]
+```
+
+## Dockerfile Pattern (Next.js)
+
+```dockerfile
+FROM node:20-alpine AS deps
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN npm run build
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+USER 1001
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+## Docker Compose Rules
+
+- Use depends_on with health checks for service ordering
+- Use environment variables for configuration (never hardcode)
+- Use named networks for multi-container communication
+- Service names become DNS hostnames (use service name, not localhost)
+
+## Git Conventions
+
+- Use Conventional Commits: feat:, fix:, chore:, docs:
+- Keep commits atomic and descriptive
+- Never commit .env files or secrets
+
+## Common Mistakes to Catch
+
+- Using localhost to connect between containers (should use service name)
+- Running as root in production containers
+- Missing .dockerignore (sends node_modules/bin/obj to daemon)
+- COPY . . before dependency install (breaks layer caching)
+- Using :latest tags (non-reproducible builds)
