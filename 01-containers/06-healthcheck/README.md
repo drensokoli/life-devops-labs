@@ -1,4 +1,4 @@
-# 07 — Health Checks + Restart Policies Demo
+# 06 — Health Checks + Restart Policies Demo
 
 ## Purpose
 

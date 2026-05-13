@@ -21,16 +21,22 @@ git checkout -b emri-mbiemri   # Replace with your name, e.g. dren-sokoli
 
 ```
 life-devops-labs/
-├── week-01-containers/     # Week 1: Docker & Containerization
-│   ├── theory/             # Part 1 demos (live coding during lecture)
-│   └── practical/          # Part 2 lab (hands-on exercises)
-├── week-02-kubernetes/     # Week 2: Kubernetes (coming soon)
-└── week-03-iac-cloud/      # Week 3: IaC & Cloud (coming soon)
+├── 01-containers/          # Lecture 1: Docker & Containerization
+│   ├── 01-layers-demo/
+│   ├── 02-bad-dockerfile/
+│   ├── 03-multistage-dotnet/
+│   ├── 04-multistage-nextjs/
+│   ├── 05-layer-caching/
+│   ├── 06-healthcheck/
+│   ├── 07-debugging/
+│   └── 08-compose-fullstack/
+├── 02-kubernetes/          # Lecture 2: Kubernetes (coming soon)
+└── 03-iac-cloud/           # Lecture 3: IaC & Cloud (coming soon)
 ```
 
 ## How This Works
 
-1. Each week has a `theory/` folder (demos the instructor runs during lecture) and a `practical/` folder (exercises you complete).
+1. Each lecture has its own numbered folder with sequenced demos.
 2. Work on your own branch (`emri-mbiemri`).
 3. Use [Conventional Commits](https://www.conventionalcommits.org/): `feat:`, `fix:`, `chore:`, `docs:`.
 4. Push your branch when done. The instructor will review your work.
