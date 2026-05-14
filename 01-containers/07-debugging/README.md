@@ -73,14 +73,18 @@ docker exec -it backend /bin/sh
 env | grep Connection
 # ConnectionStrings__Default=Host=localhost;...
 
-# Inside: prove postgres IS reachable by its container name
-curl -s http://postgres:5432 || echo "port open but not HTTP — postgres is there!"
+# nc exits 0 if it connects, 1 if refused
+nc -zv localhost 5432 && echo "localhost port open by name!" || echo "cannot reach localhost"
 
 # Exit the shell
 exit
 
 # Inspect full container details — check network and env
 docker inspect backend | grep -A5 NetworkSettings
+
+# Inside: prove postgres IS reachable by its container name
+nc -zv postgres 5432 && echo "postgres port open by name!" || echo "cannot reach postgres"
+
 ```
 
 ### Step 4 — Explain the fix
