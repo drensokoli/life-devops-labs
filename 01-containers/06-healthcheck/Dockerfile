@@ -12,6 +12,8 @@ WORKDIR /app
 
 ENV ASPNETCORE_URLS=http://+:8080
 
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+
 COPY --from=build /app/publish .
 
 USER 1001

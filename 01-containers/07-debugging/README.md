@@ -50,27 +50,36 @@ docker run -d --name backend --network debug-net \
 ### Step 3 — Debug with the toolkit
 
 ```bash
-# See container status — backend may have exited or be restarting
+# Container is Up but going unhealthy — watch the status
 docker ps -a
+# NAMES     STATUS
+# backend   Up 15 seconds (health: starting)
+# postgres  Up 30 seconds
 
-# Check backend logs — you'll see the connection error
+# After ~40 seconds (start_period + 3 retries × 10s):
+# backend   Up About a minute (unhealthy)
+
+# Check backend logs — the startup error and health check failures are there
 docker logs backend
-# [STARTUP] Failed to connect to database: Connection refused on localhost:5432
+# [STARTUP] Failed to connect to database: Failed to connect to 127.0.0.1:5432
+# [STARTUP] Starting anyway — health check will report unhealthy.
+# [HEALTH] DB unreachable: Failed to connect to 127.0.0.1:5432
+# [HEALTH] DB unreachable: ...
 
-# Shell into the backend container (if it's still running)
+# Shell into the running container
 docker exec -it backend /bin/sh
 
-# Inside: check environment variables
+# Inside: check the connection string
 env | grep Connection
-# ConnectionStrings__Default=Host=localhost;Database=lifedb;...
+# ConnectionStrings__Default=Host=localhost;...
 
-# Inside: try to reach postgres by service name
-wget -qO- http://postgres:5432 || echo "postgres is reachable by name!"
+# Inside: prove postgres IS reachable by its container name
+curl -s http://postgres:5432 || echo "port open but not HTTP — postgres is there!"
 
 # Exit the shell
 exit
 
-# Inspect full container details — check network settings
+# Inspect full container details — check network and env
 docker inspect backend | grep -A5 NetworkSettings
 ```
 

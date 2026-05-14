@@ -1,4 +1,6 @@
+using System.Net.Sockets;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,20 +29,30 @@ using (var scope = app.Services.CreateScope())
     catch (Exception ex)
     {
         Console.WriteLine($"[STARTUP] Failed to connect to database: {ex.Message}");
+        Console.WriteLine($"[STARTUP] Starting anyway — health check will report unhealthy.");
     }
 }
 
 app.MapGet("/", () => "LIFE-3 Student Registry API — POST /api/students, GET /api/students");
 
-app.MapGet("/health", async (StudentDb db) =>
+app.MapGet("/health", async () =>
 {
     try
     {
-        await db.Database.CanConnectAsync();
+        var parsed = new NpgsqlConnectionStringBuilder(connectionString);
+        var host = parsed.Host ?? "localhost";
+        var port = parsed.Port > 0 ? parsed.Port : 5432;
+
+        using var tcp = new TcpClient();
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+        await tcp.ConnectAsync(host, port, cts.Token);
+
+        Console.WriteLine($"[HEALTH] Connected to {host}:{port} — healthy");
         return Results.Ok("healthy");
     }
-    catch
+    catch (Exception ex)
     {
+        Console.WriteLine($"[HEALTH] Cannot reach database: {ex.Message}");
         return Results.StatusCode(503);
     }
 });
