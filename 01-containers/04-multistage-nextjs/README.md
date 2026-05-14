@@ -2,9 +2,69 @@
 
 ## Purpose
 
-Show the correct pattern for building a Next.js app — three stages (deps, builder, runner), standalone output mode, non-root user, health check.
+Show what a naive Next.js Dockerfile looks like, measure the pain, then fix it with a proper multi-stage build.
 
-## The Three Stages
+Two Dockerfiles:
+- `Dockerfile.bad` — single stage, ships everything including devDependencies and build tools
+- `Dockerfile` — three stages, minimal runtime image, non-root user, health check
+
+---
+
+## Step 1: Build the bad version
+
+```bash
+docker build -f Dockerfile.bad -t life-frontend-bad .
+docker images life-frontend-bad
+```
+
+Run it:
+```bash
+docker run -p 3000:3000 life-frontend-bad
+```
+
+Open http://localhost:3000. It works — but look at the image size.
+
+### What's wrong with `Dockerfile.bad`
+
+```dockerfile
+FROM node:20-alpine
+COPY . .             # copies everything, including .next/, .git/, any secrets
+RUN npm install      # installs devDependencies too — test tools, linters, etc.
+RUN npm run build
+CMD ["npm", "start"] # starts a dev-mode server, not a production server
+```
+
+Problems:
+- Ships all `node_modules` including devDependencies (linters, test tools, type checkers)
+- `COPY . .` before install means **every code change** busts the dependency cache
+- No non-root user
+- No health check
+
+```bash
+# Stop it before moving on
+docker stop $(docker ps -q --filter ancestor=life-frontend-bad)
+```
+
+---
+
+## Step 2: Build the good version
+
+```bash
+docker build -f Dockerfile -t life-frontend-good .
+docker images life-frontend-good
+```
+
+Compare sizes:
+```bash
+docker images | grep life-frontend
+```
+
+Run it:
+```bash
+docker run -p 3000:3000 life-frontend-good
+```
+
+### What `Dockerfile` does differently
 
 ```dockerfile
 # Stage 1: install production deps only (cached unless package.json changes)
@@ -17,36 +77,31 @@ FROM node:20-alpine AS builder
 COPY package.json package-lock.json* ./
 RUN npm ci
 COPY . .
-RUN npm run build        # outputs .next/standalone via next.config.js output: 'standalone'
+RUN npm run build   # outputs to .next/standalone (see next.config.js)
 
-# Stage 3: minimal runtime (no node_modules, just the standalone bundle)
+# Stage 3: minimal runtime (no node_modules, just the compiled bundle)
 FROM node:20-alpine AS runner
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
-USER nextjs
+USER nextjs         # non-root user
+HEALTHCHECK CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
 CMD ["node", "server.js"]
 ```
 
-Key: `output: 'standalone'` in `next.config.js` tells Next.js to bundle everything needed into a single folder — no `node_modules` in the runtime image.
+Key: `output: 'standalone'` in `next.config.js` tells Next.js to produce a self-contained bundle — no `node_modules` needed in the final image.
 
-## Commands
-
-```bash
-# Build the image
-docker build -t life-frontend .
-docker images life-frontend
-
-# Run it
-docker run -p 3000:3000 life-frontend
-
-# Check the health endpoint
-curl http://localhost:3000/
-```
+---
 
 ## What to observe
 
-- The final image is much smaller than if you just `COPY . .` and run `npm start`
-- `node_modules` from the builder stage does NOT end up in the runner — only the compiled standalone bundle
-- Modify `app/page.tsx` and rebuild — the `npm ci` (deps install) layer hits cache; only the build step reruns
-- `USER nextjs` — non-root user, same security principle as the .NET example
+- The good image is significantly smaller — `node_modules` and build tools are gone from the runtime
+- Modify `app/page.tsx` and rebuild the good version — `npm ci` (deps install) is cached, only the build step reruns
+- `USER nextjs` — non-root user, same security principle as the .NET examples
+- `npm start` in the bad version uses Next.js dev infrastructure; `node server.js` in the good version is a lean production server
+
+## Cleanup
+
+```bash
+docker rmi life-frontend-bad life-frontend-good
+```
