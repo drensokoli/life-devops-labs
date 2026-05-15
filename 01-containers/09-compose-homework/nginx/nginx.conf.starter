@@ -1,0 +1,27 @@
+events {
+    worker_connections 1024;
+}
+
+http {
+    # TODO: Define upstreams for the frontend and backend services.
+    #       Use the docker-compose service names, not localhost.
+    #
+    # upstream frontend {
+    #     server TODO_FRONTEND_HOST:3000;
+    # }
+    #
+    # upstream backend {
+    #     server TODO_BACKEND_HOST:8080;
+    # }
+
+    server {
+        listen 80;
+
+        # TODO: Add a location block that proxies "/" to the frontend
+        #       upstream. Don't forget the proxy headers.
+
+        # TODO: Add a location block that proxies "/api/" to the backend
+        #       upstream. The backend already serves under /api/* so
+        #       the proxy_pass path should match.
+    }
+}
