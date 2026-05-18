@@ -13,7 +13,7 @@ Deploy the same Student Registry app from lecture 1 (PostgreSQL + .NET Backend +
 ```bash
 # From this directory: life-devops-labs/02-kubernetes/03-manifests/
 docker build -t life-backend:1.0.0 ../../01-containers/07-debugging/backend/ -f ../../01-containers/07-debugging/backend/Dockerfile
-docker build -t life-frontend:1.0.0 ../../01-containers/07-debugging/frontend/ -f ../../01-containers/07-debugging/frontend/Dockerfile
+docker build -t life-frontend:1.0.0 ../../01-containers/07-debugging/frontend/ -f ../../01-containers/07-debugging/frontend/Dockerfile.k8s
 ```
 
 Use the **`backend/`** or **`frontend/`** path as the last argument (build context). Do **not** point at `07-debugging/` alone (there is no Dockerfile there), and you do **not** need `-f Dockerfile` unless you pass an explicit path to a file — a bare `-f Dockerfile` is read from your **current shell directory**, which often causes “no such file or directory”.
