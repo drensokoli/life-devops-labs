@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  namespace: life-app
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: life.local
+      http:
+        paths:
+          # TODO: Add a path rule for /api that routes to backend-service on port 80
+          #       Use pathType: ImplementationSpecific and path: /api(/|$)(.*)
+          # TODO: Add a path rule for / that routes to frontend-service on port 80
+          #       Use pathType: ImplementationSpecific and path: /()(.*)
+          #       (This must come AFTER the /api rule)
+          []

@@ -1,0 +1,21 @@
+# TODO: Write a complete Deployment + Service for the .NET backend
+#
+# Requirements:
+# - Deployment name: backend
+# - Namespace: life-app
+# - Replicas: 2
+# - Image: life-backend:1.0.0 (imagePullPolicy: Never)
+# - Container port: 8080
+# - envFrom: app-config (configMapRef) + db-credentials (secretRef)
+# - Liveness probe: httpGet /health port 8080, initialDelaySeconds 15, periodSeconds 30
+# - Readiness probe: httpGet /health port 8080, initialDelaySeconds 10, periodSeconds 10
+# - Resource requests: memory 128Mi, cpu 250m
+# - Resource limits: memory 512Mi, cpu 500m
+# - Rolling update strategy: maxUnavailable 1, maxSurge 1
+# - Labels: app: backend
+#
+# Service requirements:
+# - Service name: backend-service
+# - Type: ClusterIP
+# - Port: 80 → targetPort: 8080
+# - Selector: app: backend

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: life-app
+data:
+  ASPNETCORE_ENVIRONMENT: "Production"
+  ASPNETCORE_URLS: "http://+:8080"
+  POSTGRES_HOST: "postgres-service"
+  POSTGRES_DB: "lifedb"
+  ConnectionStrings__Default: "Host=postgres-service;Database=lifedb;Username=life;Password=life2026"

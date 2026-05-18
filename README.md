@@ -7,6 +7,8 @@ Lab repository for the LIFE from Gjirafa DevOps course.
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
 - [Git](https://git-scm.com/downloads)
 - [VS Code](https://code.visualstudio.com/) or [Cursor](https://cursor.sh/)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/) (comes with Docker Desktop)
+- [Helm](https://helm.sh/docs/intro/install/)
 - Terminal (iTerm2, Windows Terminal, or built-in)
 
 ## Getting Started
@@ -30,7 +32,13 @@ life-devops-labs/
 │   ├── 06-healthcheck/
 │   ├── 07-debugging/
 │   └── 08-compose-fullstack/
-├── 02-kubernetes/          # Lecture 2: Kubernetes (coming soon)
+├── 02-kubernetes/          # Lecture 2: Kubernetes
+│   ├── 01-cluster-setup/
+│   ├── 02-api-demo/
+│   ├── 03-manifests/
+│   ├── 04-operations/
+│   ├── 05-helm-basics/
+│   └── 06-k8s-homework/
 └── 03-iac-cloud/           # Lecture 3: IaC & Cloud (coming soon)
 ```
 

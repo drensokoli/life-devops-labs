@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: life-app
+data:
+  ASPNETCORE_ENVIRONMENT: "Production"
+  ASPNETCORE_URLS: "http://+:8080"
+  # TODO: Add POSTGRES_HOST (hint: use the postgres Service name)
+  # TODO: Add POSTGRES_DB
+  # TODO: Add ConnectionStrings__Default (format: "Host=<service>;Database=<db>;Username=<user>;Password=<pass>")

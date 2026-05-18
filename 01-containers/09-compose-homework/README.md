@@ -118,13 +118,19 @@ When your full stack is running:
 
 The script probes each service, records pass/fail for every check, and writes `lab-09-receipt.md`. You can rerun it as many times as you like — it overwrites the previous report.
 
-**Submit** by committing `lab-09-receipt.md` (and all your work) to your personal branch and pushing:
+**Submission requires two steps — both are mandatory:**
+
+**1. GitHub** — commit everything and push to your personal branch:
 
 ```bash
 git add .
 git commit -m "lab-09 submission"
 git push origin your-name-lastname-id
 ```
+
+**2. Moodle** — upload the `lab-09-receipt.md` file to the Moodle assignment.
+
+Your submission is only complete when both are done.
 
 ---
 

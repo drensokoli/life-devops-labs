@@ -1,0 +1,18 @@
+auth:
+  postgresPassword: "life2026"
+  username: "life"
+  password: "life2026"
+  database: "lifedb"
+
+primary:
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "250m"
+    limits:
+      memory: "256Mi"
+      cpu: "500m"
+  persistence:
+    size: 1Gi
+  service:
+    type: ClusterIP
