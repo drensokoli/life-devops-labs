@@ -1,0 +1,56 @@
+---
+description: Terraform conventions for Lecture 3 IaC & Cloud labs
+globs: "**/*.tf"
+alwaysApply: false
+---
+
+# Terraform Standards
+
+## Region & cost safety
+- Region: `eu-central-1` (Frankfurt) for all labs
+- Free-tier defaults: `t3.micro` / `db.t3.micro`
+- Never suggest: NAT Gateway, Multi-AZ RDS, instances larger than `t3.micro`, EKS
+
+## Tagging — every resource
+```hcl
+locals {
+  common_tags = {
+    Owner   = var.student_name
+    Course  = "LIFE-DevOps"
+    Lecture = "03-iac-cloud"
+    Lab     = "XX-name"
+    Managed = "terraform"
+  }
+}
+```
+Use `tags = local.common_tags` (or merge with resource-specific tags via `merge()`).
+
+## Variables & outputs
+- Every variable must have `description` and `type`
+- Every output must have `description`
+- Sensitive outputs: `sensitive = true`
+
+## Pinning
+- Pin providers in `versions.tf`
+- Pin modules: `version = "~> X.Y"`
+
+## Lab-specific settings
+```hcl
+# RDS — allow destroy without snapshot
+skip_final_snapshot  = true
+deletion_protection  = false
+
+# ECR — allow destroy with images present
+force_delete = true
+```
+
+## Never commit
+- `*.tfstate`, `*.tfstate.backup`
+- `*.tfvars` (commit only `*.tfvars.example`)
+- AWS credentials, `.pem` files, access keys
+
+## Critical cost items — NEVER auto-suggest
+- `enable_nat_gateway = true` ($32/mo idle)
+- `multi_az = true` on RDS (doubles cost)
+- Instance types larger than `t3.micro`
+- Detached Elastic IPs

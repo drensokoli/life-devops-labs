@@ -1,0 +1,71 @@
+---
+description: Kubernetes manifest standards for LIFE DevOps course labs
+globs: "**/*.yaml"
+alwaysApply: false
+---
+
+# Kubernetes Standards
+
+## Every Deployment must have
+- `livenessProbe` and `readinessProbe`
+- `resources.requests` AND `resources.limits` on every container
+- Labels that match the Service selector exactly
+
+## Configuration
+- `ConfigMap` for non-sensitive config
+- `Secret` (with `stringData`) for sensitive config — never inline plaintext in `data:`
+
+## Local development
+- `imagePullPolicy: Never` when using locally-built images on Docker Desktop / minikube
+
+## Cross-pod communication
+Use Service DNS names, not pod IPs:
+```yaml
+env:
+  - name: DB_HOST
+    value: postgres-service   # ✅ service name
+  # value: 10.96.0.5          # ❌ pod IP
+```
+
+## Minimal Deployment template
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: my-app
+          image: my-app:1.0.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+```

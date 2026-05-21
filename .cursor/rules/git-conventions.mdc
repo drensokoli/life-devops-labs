@@ -1,0 +1,27 @@
+---
+description: Git commit and branch conventions for LIFE DevOps labs
+alwaysApply: true
+---
+
+# Git Conventions
+
+## Commit format (Conventional Commits)
+```
+<type>: <short description>
+
+feat: add multi-stage Dockerfile for backend
+fix: correct postgres connection string in compose
+chore: add .dockerignore to nextjs service
+docs: update README with AWS setup steps
+```
+
+Types: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`
+
+## Branch
+Students work on `emri-mbiemri` (their own name branch).
+
+## Never commit
+- `.env` files or any file containing secrets
+- `*.tfstate`, `*.tfvars`
+- `*.pem`, AWS credentials
+- `node_modules/`, `bin/`, `obj/`

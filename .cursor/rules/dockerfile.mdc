@@ -1,0 +1,60 @@
+---
+globs: Dockerfile
+alwaysApply: false
+---
+# Dockerfile Standards
+
+## Required in every Dockerfile
+- Multi-stage build (minimum: build stage + runtime stage)
+- Non-root user: `USER 1001` (or named user)
+- `HEALTHCHECK` instruction
+- Pinned image versions — never `:latest`
+- Copy dependency manifests **before** source code (layer caching)
+- Alpine or slim base images
+
+## .NET Pattern
+```dockerfile
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY *.csproj .
+RUN dotnet restore
+COPY . .
+RUN dotnet publish -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+USER 1001
+EXPOSE 8080
+HEALTHCHECK CMD wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1
+ENTRYPOINT ["dotnet", "YourApp.dll"]
+```
+
+## Next.js Pattern
+```dockerfile
+FROM node:20-alpine AS deps
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN npm run build
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+USER 1001
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+## Common Mistakes
+- ❌ `COPY . .` before installing dependencies → breaks layer cache
+- ❌ Running as root in production
+- ❌ Missing `.dockerignore` → sends `node_modules`/`bin`/`obj` to daemon
+- ❌ `:latest` tags → non-reproducible builds

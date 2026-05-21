@@ -1,0 +1,29 @@
+---
+description: Docker Compose conventions for LIFE DevOps course labs
+globs: "**/docker-compose*.yml"
+alwaysApply: false
+---
+
+# Docker Compose Standards
+
+## Service ordering
+Use `depends_on` with `condition: service_healthy` — never `service_started` alone when the downstream service needs the upstream to be ready.
+
+```yaml
+depends_on:
+  db:
+    condition: service_healthy
+```
+
+## Networking
+- Use named networks; never rely on `default` bridge for multi-service apps
+- Service names **are** DNS hostnames — use `postgres` not `localhost`
+
+## Configuration
+- All config via environment variables — never hardcode passwords/ports in service definitions
+- Use `.env` file for local defaults; never commit it (only commit `.env.example`)
+
+## Common Mistakes
+- ❌ `DB_HOST=localhost` inside a container → use the service name (e.g. `postgres`)
+- ❌ No `healthcheck` on the db service → dependent services start before db is ready
+- ❌ Hardcoded secrets in `docker-compose.yml`
