@@ -1,0 +1,5 @@
+student_name  = "dren-sokoli"
+aws_region    = "eu-central-1"
+github_owner  = "drensokoli"
+github_repo   = "life-devops-labs"
+github_branch = "dren-sokoli"

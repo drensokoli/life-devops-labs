@@ -1,0 +1,3 @@
+student_name = "dren-sokoli"
+aws_region   = "eu-central-1"
+db_password  = "ChangeMeStrong#2026"

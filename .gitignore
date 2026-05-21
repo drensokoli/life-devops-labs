@@ -24,9 +24,27 @@ Thumbs.db
 # Docker
 docker-compose.override.yml
 
-# Terraform (for future weeks)
+# Terraform
 .terraform/
+.terraform.lock.hcl
 *.tfstate
+*.tfstate.*
 *.tfstate.backup
 *.tfvars
 !*.tfvars.example
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# AWS / SSH keys (Lecture 3 generates a key pair locally)
+*.pem
+*.ppk
+.aws/
+aws-credentials
+credentials.csv
+
+# Verify receipts (instructor may want these checked in selectively)
+# (left commented — students push receipts intentionally)
+# lab-*-receipt.md

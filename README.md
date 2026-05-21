@@ -9,6 +9,9 @@ Lab repository for the LIFE from Gjirafa DevOps course.
 - [VS Code](https://code.visualstudio.com/) or [Cursor](https://cursor.sh/)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) (comes with Docker Desktop)
 - [Helm](https://helm.sh/docs/intro/install/)
+- [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (for lecture 3)
+- [Terraform](https://developer.hashicorp.com/terraform/install) >= 1.5 (for lecture 3)
+- AWS account with billing alerts (set up via `03-iac-cloud/00-pre-class-setup/`)
 - Terminal (iTerm2, Windows Terminal, or built-in)
 
 ## Getting Started
@@ -39,7 +42,15 @@ life-devops-labs/
 │   ├── 04-operations/
 │   ├── 05-helm-basics/
 │   └── 06-k8s-homework/
-└── 03-iac-cloud/           # Lecture 3: IaC & Cloud (coming soon)
+└── 03-iac-cloud/           # Lecture 3: IaC & Cloud (AWS + Terraform)
+    ├── 00-pre-class-setup/
+    ├── 01-aws-setup/
+    ├── 02-terraform-basics/
+    ├── 03-state-backend/
+    ├── 04-vpc-networking/
+    ├── 05-compute-storage/
+    ├── 06-cicd-github-actions/
+    └── 07-iac-homework/
 ```
 
 ## How This Works
