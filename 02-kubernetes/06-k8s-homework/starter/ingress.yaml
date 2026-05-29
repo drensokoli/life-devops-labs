@@ -13,7 +13,20 @@ spec:
         paths:
           # TODO: Add a path rule for /api that routes to backend-service on port 80
           #       Use pathType: ImplementationSpecific and path: /api(/|$)(.*)
+          - path: /api(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 80
           # TODO: Add a path rule for / that routes to frontend-service on port 80
           #       Use pathType: ImplementationSpecific and path: /()(.*)
           #       (This must come AFTER the /api rule)
-          []
+          - path: /()(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: frontend-service
+                port:
+                  number: 80

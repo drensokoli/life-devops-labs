@@ -48,11 +48,23 @@ spec:
                   key: POSTGRES_PASSWORD
           # TODO: Add resource requests (memory: "128Mi", cpu: "250m")
           # TODO: Add resource limits (memory: "256Mi", cpu: "500m")
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
           # TODO: Add a readinessProbe using exec command: ["pg_isready", "-U", "life", "-d", "lifedb"]
           #       with initialDelaySeconds: 5 and periodSeconds: 5
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "life", "-d", "lifedb"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
       volumes:
         - name: postgres-storage
           persistentVolumeClaim:

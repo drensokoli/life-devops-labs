@@ -7,5 +7,8 @@ data:
   ASPNETCORE_ENVIRONMENT: "Production"
   ASPNETCORE_URLS: "http://+:8080"
   # TODO: Add POSTGRES_HOST (hint: use the postgres Service name)
+  POSTGRES_HOST: "postgres-service"
   # TODO: Add POSTGRES_DB
+  POSTGRES_DB: "lifedb"
   # TODO: Add ConnectionStrings__Default (format: "Host=<service>;Database=<db>;Username=<user>;Password=<pass>")
+  ConnectionStrings__Default: "Host=postgres-service;Database=lifedb;Username=life;Password=life2026"
