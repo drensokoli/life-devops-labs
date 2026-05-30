@@ -8,4 +8,4 @@ data:
   ASPNETCORE_URLS: "http://+:8080"
   POSTGRES_HOST: "postgres-service"
   POSTGRES_DB: "lifedb"
-  ConnectionStrings__Default: "Host=postgres-service;Database=lifedb;Username=life;Password=life2026"
+  ConnectionStrings__Default: "Host=postgres-service;Database=lifedb"
