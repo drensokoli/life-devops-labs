@@ -5,6 +5,11 @@ RUN npm ci
 
 FROM node:20-alpine AS builder
 WORKDIR /app
+
+# NEXT_PUBLIC_* vars must be present at build time so Next.js can inline them.
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
