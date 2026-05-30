@@ -90,7 +90,7 @@ _http_body() {
 
 _dockerfile_has() {
   local file="$1" pattern="$2"
-  grep -qiE "$pattern" "$file" 2>/dev/null
+  grep -qiP "$pattern" "$file" 2>/dev/null || grep -qiE "$pattern" "$file" 2>/dev/null
 }
 
 # ── Check 01: branch name ─────────────────────────────────────────────────────
