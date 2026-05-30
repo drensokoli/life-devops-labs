@@ -138,12 +138,12 @@ Your submission is only complete when both are done.
 
 Before you submit, make sure:
 
-- [ ] `docker compose up` brings all 11 services to `healthy`
-- [ ] `http://localhost` shows the LIFE Shortener UI
-- [ ] Shortening a URL inserts a row into `shortened_urls` (visible in pgAdmin at `http://localhost:5050`)
-- [ ] `http://localhost:8080/api/urls` returns the row(s) as JSON
-- [ ] `./verify.sh` runs without crashing and produces `lab-09-receipt.md`
-- [ ] Both `Dockerfile` files use multi-stage builds and a non-root user
+- [x] `docker compose up` brings all 11 services to `healthy`
+- [x] `http://localhost` shows the LIFE Shortener UI
+- [x] Shortening a URL inserts a row into `shortened_urls` (visible in pgAdmin at `http://localhost:5050`)
+- [x] `http://localhost:8080/api/urls` returns the row(s) as JSON
+- [x] `./verify.sh` runs without crashing and produces `lab-09-receipt.md`
+- [x] Both `Dockerfile` files use multi-stage builds and a non-root user
 
 ---
 
