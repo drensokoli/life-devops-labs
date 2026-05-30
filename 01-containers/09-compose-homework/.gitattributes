@@ -1,0 +1,5 @@
+# Force LF line endings regardless of core.autocrlf (repo standard is LF).
+# Prevents the "LF will be replaced by CRLF" warning on Windows checkouts.
+* text=auto eol=lf
+*.sh text eol=lf
+Dockerfile text eol=lf
