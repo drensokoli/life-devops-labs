@@ -90,7 +90,9 @@ _http_body() {
 
 _dockerfile_has() {
   local file="$1" pattern="$2"
-  grep -qiE "$pattern" "$file" 2>/dev/null
+  # -P (PCRE) is required: some patterns use lookahead, e.g. (?!0|root) in the
+  # non-root USER checks. With -E (ERE) those never match and give false fails.
+  grep -qiP "$pattern" "$file" 2>/dev/null
 }
 
 # ── Check 01: branch name ─────────────────────────────────────────────────────
