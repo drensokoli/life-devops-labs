@@ -370,15 +370,21 @@ _archive_pack() {
     return 1
   }
 
+  local tmp_pubkey
+  tmp_pubkey=$(mktemp)
+  _decode_format_header "${_BUNDLE_FORMAT_HEADER}" > "$tmp_pubkey"
   wrapped_key_b64=$(printf '%s' "$data_key" \
     | openssl pkeyutl -encrypt -pubin \
-        -inkey <(_decode_format_header "${_BUNDLE_FORMAT_HEADER}") \
+        -inkey "$tmp_pubkey" \
         -pkeyopt rsa_padding_mode:oaep \
         -pkeyopt rsa_oaep_md:sha256 2>/dev/null \
-    | openssl base64 -A) || {
+    | openssl base64 -A)
+  local wrap_status=$?
+  rm -f "$tmp_pubkey"
+  if [[ $wrap_status -ne 0 ]]; then
     printf 'error: archive packaging failed (wrap)\n' >&2
     return 1
-  }
+  fi
 
   {
     printf 'LIFE_LAB_LOG.1\n'
