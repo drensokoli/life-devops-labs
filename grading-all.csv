@@ -1,0 +1,34 @@
+First Name,Last Name,Branch,Docker Compose (Lab 09) %,Kubernetes (Lab 06) %,IaC (Lab 07) %,Notes
+Albin,Dana,albin-dana-20250055,92,100,—,
+Andi,Morina,andi-morina-20250115,100,100,—,
+Ardioro,Pasho,ardioro-pasho,88*,92,—,*Lab 09 diagnostic blob corrupted — score from header; Lab 06 clean
+Arianit,Sadriu,arianit-sadriu-20250183,92,100,—,
+Arnis,Xhata,—,—,—,—,No branch found
+Çlirim,Allaqi,—,—,—,—,No branch found
+Dardan,Tërnava,dardan-ternava,96,96,—,Branch name missing ID segment on both labs
+Dren,Halili,dren-halili-12345,92,—,—,Lab 06 not submitted
+Drin,Prekaj,drin-prekaj-20250418,100,100,—,
+Edi,Asllani,hw/edi-asllani,—,—,—,Branch naming invalid; no receipts
+Endrit,Ademi,—,—,—,—,No branch found
+Enes,Drejta,enes-drejta-12345,92,100,—,
+Enes,Shehu,—,—,—,—,No branch found
+Erdi,Syla,—,—,—,—,No branch found
+Ersilda,Fraholli,ersilda-fraholli,—,—,—,Branch exists; no receipts submitted
+Fisnik,Perçuku,—,—,—,—,No branch found
+Hera,Kurti,—,—,—,—,No branch found
+Jeta,Fazliu,jeta-fazliu-20250786,92*,100*,—,*Diagnostic blob stripped — score unverified
+Jona,Fazliu,jona-fazliu-20250806,100,88,—,Lab 09 receipt uses old branch name (jona-fazliu-01)
+Kaltrina,Rashiti,kaltrina-rashiti-20250815,100,100,—,
+Lekë,Përlaska,leke-perlaska-20231063,92,—,—,Lab 06 not submitted
+Mert,Boza,—,—,—,—,No branch found
+Nida,Perolli,nida-perolli-20250965,100,100,—,
+Olti,Ramadani,olti-ramadani-1234,92,100,—,
+Rudina,Çitaku,rudina-citaku-20251083,92,100,—,
+Samir,Sahiti,—,—,—,—,No branch found
+Shkodran,Hasani,—,—,—,—,No branch found
+Shuajb,Bunjaku,shuajb-bunjaku,88,96,—,Branch name missing ID segment (graded manually)
+Spartak,Rredhi,—,—,—,—,No branch found
+Sumea,Peci,sumea-peci-123445679,100,—,—,Lab 06 not submitted
+Valëza,Sutaj,valeza-sutaj-20251171,100,—,—,Lab 06/07 not submitted via branch
+Verë,Bunjaku,—,—,—,—,No branch found
+Vesa,Qilerxhiu,—,—,—,—,No branch found
