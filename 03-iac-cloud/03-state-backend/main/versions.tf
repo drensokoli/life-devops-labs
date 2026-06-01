@@ -14,10 +14,10 @@ terraform {
   # Backend block CANNOT use variables. After running bootstrap/, edit this
   # file and replace the placeholder values with your actual bucket/table names.
   backend "s3" {
-    bucket         = "life-tf-state-CHANGE-ME"
-    key            = "demo/terraform.tfstate"
+    bucket         = "life-tf-state-dren-sokoli"
+    key            = "03-iac-cloud/03-state-backend/terraform.tfstate"
     region         = "eu-central-1"
-    dynamodb_table = "life-tf-locks-CHANGE-ME"
+    dynamodb_table = "life-tf-locks-dren-sokoli"
     encrypt        = true
   }
 }
