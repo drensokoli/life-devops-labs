@@ -24,11 +24,11 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
 
   async function fetchRecent() {
     try {
-      const res = await fetch(`${apiUrl}/api/urls`);
+      const res = await fetch(`${apiUrl}/urls`);
       if (res.ok) setRecent(await res.json());
     } catch (err) {
       console.log('Failed to fetch URLs:', err);
@@ -42,7 +42,7 @@ export default function Home() {
     setError('');
     setResult(null);
     try {
-      const res = await fetch(`${apiUrl}/api/shorten`, {
+      const res = await fetch(`${apiUrl}/shorten`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: url.trim() }),

@@ -179,14 +179,14 @@ Your submission is only complete when both are done.
 
 Before you submit, make sure:
 
-- [ ] All pods are `Running` — `kubectl get pods` shows no CrashLoopBackOff
-- [ ] `http://life.local` loads the Student Registry UI
-- [ ] Registering a name inserts a row — verify with `psql` or `kubectl exec`
-- [ ] All deployments have liveness probes, readiness probes, and resource limits
-- [ ] Backend scales to 3 replicas and rolling update completes cleanly
-- [ ] `./verify.sh` passes all 25 checks and produces `lab-06-receipt.md`
-- [ ] You are on a personal branch (`firstname-lastname-id`), not `main`
-- [ ] Receipt pushed to GitHub and uploaded to Moodle
+- [x] All pods are `Running` — `kubectl get pods` shows no CrashLoopBackOff
+- [x] `http://life.local` loads the Student Registry UI
+- [x] Registering a name inserts a row — verify with `psql` or `kubectl exec`
+- [x] All deployments have liveness probes, readiness probes, and resource limits
+- [x] Backend scales to 3 replicas and rolling update completes cleanly
+- [x] `./verify.sh` passes all 25 checks and produces `lab-06-receipt.md`
+- [x] You are on a personal branch (`firstname-lastname-id`), not `main`
+- [x] Receipt pushed to GitHub and uploaded to Moodle
 
 ---
 

@@ -1,15 +1,8 @@
-# TODO: Configure a datasource entry so Grafana queries the Loki
-#       service running in this compose stack.
-#
-# A minimal datasources file looks like:
-#
-# apiVersion: 1
-# datasources:
-#   - name: Loki
-#     type: loki
-#     access: proxy
-#     url: http://TODO_LOKI_HOST:3100
-#     isDefault: true
-#
-# Replace the URL with the right service hostname (NOT localhost)
-# and remove these TODO comments before submitting.
+apiVersion: 1
+
+datasources:
+  - name: Loki
+    type: loki
+    access: proxy
+    url: http://loki:3100
+    isDefault: true
